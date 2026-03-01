@@ -12,6 +12,7 @@ interface StackProps {
   fullWidth?: boolean;
   className?: string;
   children: React.ReactNode;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }
 
 const directionMap: Record<Direction, string> = {
@@ -52,6 +53,7 @@ export function Stack({
   fullWidth = false,
   className = "",
   children,
+  ref,
 }: StackProps) {
   const classes = [
     "flex",
@@ -65,7 +67,11 @@ export function Stack({
     .filter(Boolean)
     .join(" ");
 
-  return <div className={classes}>{children}</div>;
+  return (
+    <div ref={ref} className={classes}>
+      {children}
+    </div>
+  );
 }
 
 export default Stack;

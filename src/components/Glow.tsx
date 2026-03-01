@@ -1,40 +1,46 @@
-import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface GlowProps {
-  color?: string; // e.g., "bg-blue-500"
-  size?: string; // e.g., "w-[500px] h-[500px]"
-  blur?: string; // e.g., "blur-[120px]"
-  opacity?: string; // e.g., "opacity-20"
-  className?: string; // For positioning (e.g., "-top-20 -left-20")
+  color?: string;
+  size?: string;
+  blur?: string;
+  opacity?: string;
+  className?: string;
 }
 
 export default function Glow({
-  color = "bg-gray-500",
-  size = "w-[600px] h-[600px]",
+  color = "bg-white",
+  size = "w-[800px] h-[800px]",
   blur = "blur-[150px]",
-  opacity = "opacity-20",
+  opacity = "opacity-100",
   className = "",
 }: GlowProps) {
-  const glowRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  // Subtle breathing animation to make it "lively"
   useGSAP(() => {
-    gsap.to(glowRef.current, {
-      scale: 1.2,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
+    gsap.from(ref.current, {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top 60%",
+        toggleActions: "play none none reverse",
+      },
     });
   });
 
   return (
     <div
-      ref={glowRef}
+      ref={ref}
       className={`
-        absolute pointer-events-none rounded-full -z-10
+        absolute pointer-events-none rounded-full
         ${color} ${size} ${blur} ${opacity} ${className}
       `}
       aria-hidden="true"

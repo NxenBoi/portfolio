@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 
 function Background() {
-  const ref = useRef<HTMLVideoElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.from(ref.current, {
@@ -14,17 +14,12 @@ function Background() {
   });
 
   return (
-    <video
+    <div
       ref={ref}
-      src="public/bg.mp4"
-      autoPlay
-      loop
-      muted
-      playsInline
-      disablePictureInPicture
-      className="absolute inset-0 w-full h-full object-cover opacity-55 blur-[10px] scale-[1.05] 
-                 mask-[linear-gradient(#000_0%,#0000_100%)] pointer-events-none saturate-150"
-    />
+      className="background w-full h-full opacity-55 blur-xs
+      bg-[#1f111a] bg-cover bg-center
+      mask-[linear-gradient(#000_0%,#000_0%,#0000_100%)] absolute"
+    ></div>
   );
 }
 

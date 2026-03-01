@@ -4,15 +4,17 @@ import { useGSAP } from "@gsap/react";
 import "../css/App.css";
 
 import Section from "./Section";
-import Background from "./Images/Background";
 import Stack from "./Stack";
 import Logo from "./Images/Logo";
 import Button from "./Button";
 import Roblox from "./Images/Roblox";
+import Glow from "./Glow";
+import Stars from "./Stars";
+import Services from "./Services";
 
 function App() {
   useGSAP(() => {
-    gsap.from("p", {
+    gsap.from(".p-fade", {
       opacity: 0,
       duration: 1.5,
       stagger: 0.2,
@@ -22,14 +24,15 @@ function App() {
   return (
     <>
       <Section>
-        <Background></Background>
+        <Stars></Stars>
+
         <Roblox></Roblox>
         <Stack direction="column" justify="start" align="center">
-          <p className="code">
+          <p className="code p-fade">
             <i className="fa-regular fa-circle-check"></i> available
           </p>
           <Logo></Logo>
-          <p className="text-center">
+          <p className="text-center p-fade">
             I script top-quality frameworks for Roblox games, <br></br> focusing
             on good structure and performance.
           </p>
@@ -40,7 +43,23 @@ function App() {
         </Stack>
       </Section>
 
-      <Section></Section>
+      <Section color="bg-[#040208]">
+        <Glow
+          color="bg-purple-500"
+          opacity="opacity-10"
+          className="-left-20 -top-20"
+        ></Glow>
+
+        <Glow
+          color="bg-violet-500"
+          opacity="opacity-8"
+          className="-right-20 -bottom-20"
+        ></Glow>
+
+        <Services />
+      </Section>
+
+      <Section />
     </>
   );
 }
