@@ -58,8 +58,6 @@ function App() {
 
         <Services />
       </Section>
-
-      <Section />
     </>
   );
 }

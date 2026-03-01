@@ -53,7 +53,7 @@ function Services() {
       gsap.from(".service-card", {
         opacity: 0,
         y: 20,
-        duration: 0.6,
+        duration: 0.5,
         stagger: 0.1,
         scrollTrigger: {
           trigger: ".service-card",
