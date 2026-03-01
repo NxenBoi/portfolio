@@ -16,7 +16,7 @@ function Logo() {
   return (
     <img
       ref={ref}
-      src="src/assets/logo.png"
+      src="public/logo.png"
       className="w-70 drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]"
     />
   );

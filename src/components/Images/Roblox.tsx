@@ -20,7 +20,7 @@ function Roblox() {
     <img
       ref={ref}
       className="w-95 position: absolute z-[-1] opacity-10"
-      src="src/assets/roblox.png"
+      src="public/roblox.png"
     ></img>
   );
 }
