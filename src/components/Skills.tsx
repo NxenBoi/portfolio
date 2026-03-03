@@ -1,7 +1,6 @@
 import Glass from "./Glass";
 import Icon from "./Images/Icon";
 import Stack from "./Stack";
-import TintedGlass from "./TintedGlass";
 
 const IconLinks = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Roblox_Studio_icon_2025.svg/960px-Roblox_Studio_icon_2025.svg.png",
@@ -15,7 +14,7 @@ const IconLinks = [
 
 function Skills() {
   return (
-    <TintedGlass className="w-fit h-fit p-6 rounded-2xl">
+    <Glass tinted={true} className="w-fit h-fit p-6 rounded-2xl">
       <Stack direction="column" justify="start" align="start" gap="6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 w-full">
           {IconLinks.map((link) => (
@@ -27,7 +26,7 @@ function Skills() {
         </div>
         <hr className="w-full opacity-25"></hr>
       </Stack>
-    </TintedGlass>
+    </Glass>
   );
 }
 

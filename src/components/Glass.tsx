@@ -5,10 +5,11 @@ import { useRef } from "react";
 
 interface Props {
   className: string;
+  tinted?: boolean;
   children?: React.ReactNode;
 }
 
-function Glass({ className, children }: Props) {
+function Glass({ className, tinted, children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -25,11 +26,10 @@ function Glass({ className, children }: Props) {
     });
   });
 
+  const newClassName = `${tinted ? "bg-black/25" : "bg-white/5"} backdrop-blur-xl border border-white/5 rounded-lg text-center items-center justify-center relative flex overflow-hidden ${className}`;
+
   return (
-    <div
-      ref={ref}
-      className={`bg-white/5 backdrop-blur-lg border border-white/5 rounded-xl text-center items-center justify-center relative flex overflow-hidden ${className}`}
-    >
+    <div ref={ref} className={newClassName}>
       {children}
     </div>
   );
