@@ -1,9 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useRef } from "react";
 
 interface GlowProps {
   color?: string;
@@ -11,21 +8,22 @@ interface GlowProps {
   blur?: string;
   opacity?: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export default function Glow({
-  color = "bg-white",
+  color = "",
   size = "w-[800px] h-[800px]",
   blur = "blur-[150px]",
   opacity = "opacity-100",
   className = "",
+  style,
 }: GlowProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.from(ref.current, {
       opacity: 0,
-      y: 20,
       duration: 0.6,
       stagger: 0.1,
       scrollTrigger: {
@@ -38,6 +36,7 @@ export default function Glow({
 
   return (
     <div
+      style={style}
       ref={ref}
       className={`
         absolute pointer-events-none rounded-full

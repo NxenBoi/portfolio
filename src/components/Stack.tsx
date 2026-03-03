@@ -2,7 +2,7 @@ import React from "react";
 
 type Direction = "row" | "column";
 type Justify = "start" | "center" | "end";
-type Align = "start" | "center" | "end";
+type Align = "start" | "center" | "end" | "stretch";
 
 interface StackProps {
   direction?: Direction;
@@ -11,7 +11,7 @@ interface StackProps {
   gap?: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12";
   fullWidth?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   ref?: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -30,6 +30,7 @@ const alignMap: Record<Align, string> = {
   start: "items-start",
   center: "items-center",
   end: "items-end",
+  stretch: "items-stretch",
 };
 
 const gapMap = {

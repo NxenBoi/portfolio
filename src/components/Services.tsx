@@ -97,10 +97,7 @@ function Services() {
       gap="5"
       className="py-12"
     >
-      <h1 className="text-3xl font-bold text-white opacity-50 text-center mb-8 code">
-        My Services
-      </h1>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full px-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full px-4 ">
         {services.map((service, index) => (
           <div
             key={index}
