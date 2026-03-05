@@ -10,6 +10,7 @@ interface Project {
   name: string;
   types: string[];
   video: string;
+  poster: string;
 }
 
 const projects: Project[] = [
@@ -18,12 +19,14 @@ const projects: Project[] = [
     name: "FPS & Movement",
     types: ["first person guns", "movement", "wall-running"],
     video: "public/examples/shooter.mp4",
+    poster: "public/examples_posters/shooter.webp",
   },
   {
     id: 2,
     name: "Building Plugin",
     types: ["plugin", "procedural generation"],
     video: "public/examples/bp.mp4",
+    poster: "public/examples_posters/bp.webp",
   },
 ];
 
@@ -141,6 +144,7 @@ export default function Examples() {
               ref={videoRef}
               key={activeProject.video}
               src={activeProject.video}
+              poster={activeProject.poster}
               autoPlay
               loop
               muted
