@@ -11,6 +11,7 @@ interface Project {
   types: string[];
   video: string;
   poster: string;
+  icon?: string;
 }
 
 const projects: Project[] = [
@@ -20,6 +21,7 @@ const projects: Project[] = [
     types: ["first person guns", "movement", "wall-running"],
     video: "public/examples/shooter.mp4",
     poster: "public/examples_posters/shooter.webp",
+    icon: "fa-solid fa-gun",
   },
   {
     id: 2,
@@ -27,6 +29,7 @@ const projects: Project[] = [
     types: ["plugin", "procedural generation"],
     video: "public/examples/bp.mp4",
     poster: "public/examples_posters/bp.webp",
+    icon: "fa-solid fa-screwdriver-wrench",
   },
 ];
 
@@ -124,7 +127,7 @@ export default function Examples() {
                       : "hover:bg-white/5 text-white/50 hover:text-white"
                   }`}
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                  <i className={project.icon ?? "fa-regular fa-circle"}></i>
                   <span className="text-[16px] tracking-tight code">{project.name}</span>
                 </button>
               ))}
