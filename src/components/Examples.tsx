@@ -25,6 +25,23 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    name: "Tower Defense",
+    types: ["towers", "3 upgrade paths", "enemies"],
+    video: "public/examples/tds.mp4",
+    poster: "public/examples_posters/tds.webp",
+    icon: "fa-solid fa-chess-rook",
+  },
+
+  {
+    id: 3,
+    name: "Roguelike",
+    types: ["enemies", "weapons", "abilities", "pretty bad"],
+    video: "public/examples/roguelike.mp4",
+    poster: "public/examples_posters/roguelike.webp",
+    icon: "fa-solid fa-shield",
+  },
+  {
+    id: 4,
     name: "Building Plugin",
     types: ["plugin", "procedural generation"],
     video: "public/examples/bp.mp4",
@@ -131,6 +148,9 @@ export default function Examples() {
                   <span className="text-[16px] tracking-tight code">{project.name}</span>
                 </button>
               ))}
+              <p className="text-[14px] tracking-tight w-full flex items-center gap-3 px-4 py-1 opacity-25">
+                ...More soon 🙏
+              </p>
             </Stack>
 
             <div className="w-full p-4 border-t border-white/5 text-left bg-black/20">

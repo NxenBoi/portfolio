@@ -89,15 +89,8 @@ function Services() {
   );
 
   return (
-    <Stack
-      ref={container}
-      direction="column"
-      justify="center"
-      align="center"
-      gap="5"
-      className="py-12"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full px-4 ">
+    <Stack ref={container} direction="column" justify="center" align="center" gap="5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl w-full px-4 ">
         {services.map((service, index) => (
           <div
             key={index}
@@ -106,12 +99,8 @@ function Services() {
             <div className="text-3xl text-white mb-4">
               <i className={`fas ${service.icon}`}></i>
             </div>
-            <h3 className="text-[18px] text-white mb-2 code pointer-events-none">
-              {service.title}
-            </h3>
-            <p className="text-[16px] font-normal text-white opacity-30 pointer-events-none">
-              {service.description}
-            </p>
+            <h3 className="text-[18px] text-white mb-2 code">{service.title}</h3>
+            <p className="text-[16px] font-normal text-white opacity-30 ">{service.description}</p>
           </div>
         ))}
       </div>

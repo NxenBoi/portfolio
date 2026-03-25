@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ElementType } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
@@ -7,9 +7,11 @@ interface Props {
   className: string;
   tinted?: boolean;
   children?: React.ReactNode;
+  as?: ElementType;
+  [key: string]: unknown;
 }
 
-function Glass({ className, tinted, children }: Props) {
+function Glass({ className, tinted, children, as: Component = "div", ...props }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -29,9 +31,9 @@ function Glass({ className, tinted, children }: Props) {
   const newClassName = `${tinted ? "bg-black/25" : "bg-white/5"} backdrop-blur-xl border border-white/5 rounded-lg text-center items-center justify-center relative flex overflow-hidden ${className}`;
 
   return (
-    <div ref={ref} className={newClassName}>
+    <Component ref={ref} className={newClassName} {...props}>
       {children}
-    </div>
+    </Component>
   );
 }
 
