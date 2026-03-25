@@ -13,11 +13,11 @@ export default function Navbar() {
     { name: "Contact", href: "#contact" },
   ];
 
-  // --- THE DYNAMIC SCROLL LOGIC ---
   useEffect(() => {
     const observerOptions = {
-      root: null, // Use the viewport
-      rootMargin: "-40% 0px -40% 0px", // Trigger when section is in the middle 20% of screen
+      root: null,
+      // This detects the section when it enters the top 20% or bottom 20% of the screen
+      rootMargin: "-20% 0px -70% 0px",
       threshold: 0,
     };
 
