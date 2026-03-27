@@ -31,17 +31,8 @@ const projects: Project[] = [
     poster: "public/examples_posters/tds.webp",
     icon: "fa-solid fa-chess-rook",
   },
-
   {
     id: 3,
-    name: "Roguelike",
-    types: ["enemies", "weapons", "abilities", "pretty bad"],
-    video: "public/examples/roguelike.mp4",
-    poster: "public/examples_posters/roguelike.webp",
-    icon: "fa-solid fa-shield",
-  },
-  {
-    id: 4,
     name: "Building Plugin",
     types: ["plugin", "procedural generation"],
     video: "public/examples/bp.mp4",
