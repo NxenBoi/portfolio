@@ -59,7 +59,7 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
   }, [PlaceId]);
 
   return (
-    <Glass className="w-64 overflow-hidden border-white/10 flex flex-col">
+    <Glass className="w-80 overflow-hidden border-white/10 flex flex-col">
       {/* Thumbnail */}
       <div className="w-full h-36 bg-white/5 shrink-0">
         {meta?.thumbnail ? (
@@ -70,7 +70,7 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-3 p-4">
+      <div className="w-full flex flex-col gap-3 p-4">
         {error ? (
           <div className="flex flex-col gap-1">
             <p className="text-red-400 text-sm font-medium">Failed to load</p>

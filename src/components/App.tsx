@@ -80,7 +80,7 @@ function App() {
         />
         <Stack direction="column" justify="start" align="center" gap="12">
           <Title title="CONTRIBUTIONS" />
-          <Carousel>
+          <Carousel itemWidth={350}>
             <Game PlaceId="74168329160622"></Game>
             <Game PlaceId="100576592245399"></Game>
             <Game PlaceId="103109218059402"></Game>
