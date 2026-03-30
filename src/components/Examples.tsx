@@ -33,6 +33,14 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    name: "PC Building",
+    types: ["pc building simulator", "peak life"],
+    video: "public/examples/pc.mp4",
+    poster: "public/examples_posters/pc.webp",
+    icon: "fa-solid fa-computer",
+  },
+  {
+    id: 4,
     name: "Building Plugin",
     types: ["plugin", "procedural generation"],
     video: "public/examples/bp.mp4",
@@ -135,7 +143,7 @@ export default function Examples() {
                       : "hover:bg-white/5 text-white/50 hover:text-white"
                   }`}
                 >
-                  <i className={project.icon ?? "fa-regular fa-circle"}></i>
+                  <i className={`${project.icon ?? "fa-solid fa-circle"}`}></i>
                   <span className="text-[16px] tracking-tight code">{project.name}</span>
                 </button>
               ))}
