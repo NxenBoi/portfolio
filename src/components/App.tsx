@@ -46,23 +46,8 @@ function App() {
           </p>
           <Stack direction="row" justify="center" align="center" gap="3">
             <Button destination="contact" id={0} text="Contact" type="primary"></Button>
-            <Button destination="examples" id={1} text="Learn More" type="secondary"></Button>
+            <Button destination="contributions" id={1} text="Learn More" type="secondary"></Button>
           </Stack>
-        </Stack>
-      </Section>
-
-      <Section id="examples">
-        <Stack direction="column" justify="start" align="center" gap="12">
-          <Title title="EXAMPLES" />
-          <Examples />
-        </Stack>
-      </Section>
-
-      <Section id="promises" color="bg-[#040208]">
-        <Glow color="bg-purple-500" opacity="opacity-10"></Glow>
-        <Stack direction="column" justify="start" align="center" gap="12">
-          <Title title="PROMISES" />
-          <Services />
         </Stack>
       </Section>
 
@@ -87,6 +72,22 @@ function App() {
           </Carousel>
         </Stack>
       </Section>
+
+      <Section id="examples">
+        <Stack direction="column" justify="start" align="center" gap="12">
+          <Title title="EXAMPLES" />
+          <Examples />
+        </Stack>
+      </Section>
+
+      <Section id="promises" color="bg-[#040208]">
+        <Glow color="bg-purple-500" opacity="opacity-10"></Glow>
+        <Stack direction="column" justify="start" align="center" gap="12">
+          <Title title="PROMISES" />
+          <Services />
+        </Stack>
+      </Section>
+
 
       <Section id="contact">
         <Glow color="bg-violet-500" opacity="opacity-10"></Glow>

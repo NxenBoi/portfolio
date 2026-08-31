@@ -27,10 +27,9 @@ export default function Carousel({ children, itemWidth = 280, gap = 24 }: Carous
   }, [prev, next]);
 
   const onPointerDown = (e: React.PointerEvent) => {
-    // NEW: Check if the user is clicking a link or button
     const target = e.target as HTMLElement;
     if (target.closest("a, button")) {
-      return; // Let the browser handle the link/button naturally
+      return;
     }
 
     dragStart.current = { x: e.clientX, y: e.clientY };
@@ -44,9 +43,7 @@ export default function Carousel({ children, itemWidth = 280, gap = 24 }: Carous
     const deltaY = e.clientY - dragStart.current.y;
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-    // If it's a click (moved less than 6px)
     if (distance < 6) {
-      // THE FIX: Ask the document what is at these coordinates
       const elementAtPoint = document.elementFromPoint(e.clientX, e.clientY);
       const card = elementAtPoint?.closest("[data-index]");
 
@@ -54,9 +51,7 @@ export default function Carousel({ children, itemWidth = 280, gap = 24 }: Carous
         const newIndex = parseInt(card.getAttribute("data-index") || "0", 10);
         setIndex(newIndex);
       }
-    }
-    // If it's a swipe
-    else if (Math.abs(deltaX) > 30) {
+    } else if (Math.abs(deltaX) > 30) {
       if (deltaX < 0) next();
       else prev();
     }
@@ -93,7 +88,6 @@ export default function Carousel({ children, itemWidth = 280, gap = 24 }: Carous
                 transform: `scale(${i === index ? 1 : 0.9})`,
               }}
             >
-              {/* Ensure children don't block the hit-test */}
               <div>{child}</div>
             </div>
           ))}

@@ -60,7 +60,6 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
 
   return (
     <Glass className="w-80 overflow-hidden border-white/10 flex flex-col">
-      {/* Thumbnail */}
       <div className="w-full h-36 bg-white/5 shrink-0">
         {meta?.thumbnail ? (
           <img src={meta.thumbnail} alt={meta.name} className="w-full h-full object-cover" />
@@ -69,7 +68,6 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
         )}
       </div>
 
-      {/* Content */}
       <div className="w-full flex flex-col gap-3 p-4">
         {error ? (
           <div className="flex flex-col gap-1">
@@ -89,7 +87,6 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
           </div>
         ) : (
           <>
-            {/* Title + creator — explicitly left aligned */}
             <div className="text-left">
               <h2 className="text-white font-semibold text-base leading-tight truncate">
                 {meta.name}
@@ -97,12 +94,10 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
               <p className="text-white/40 text-xs mt-0.5">by {meta.creator}</p>
             </div>
 
-            {/* Description */}
             <p className="text-white/50 text-xs leading-relaxed line-clamp-2 text-left">
               {meta.description || "No description provided."}
             </p>
 
-            {/* Stats */}
             <div className="flex gap-4 pt-1">
               <div className="flex flex-col">
                 <span className="text-white font-semibold text-sm">{formatNum(meta.visits)}</span>
@@ -120,7 +115,6 @@ export default function RobloxGameCard({ PlaceId }: { PlaceId: string }) {
               </div>
             </div>
 
-            {/* Link */}
             <a
               href={`https://www.roblox.com/games/${PlaceId}`}
               target="_blank"

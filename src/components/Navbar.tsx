@@ -7,16 +7,15 @@ export default function Navbar() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const navItems = [
     { name: "home", href: "#home" },
+    { name: "Contributions", href: "#contributions" },
     { name: "Examples", href: "#examples" },
     { name: "Promises", href: "#promises" },
-    { name: "Contributions", href: "#contributions" },
     { name: "Contact", href: "#contact" },
   ];
 
   useEffect(() => {
     const observerOptions = {
       root: null,
-      // This detects the section when it enters the top 20% or bottom 20% of the screen
       rootMargin: "-20% 0px -70% 0px",
       threshold: 0,
     };
@@ -31,7 +30,6 @@ export default function Navbar() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Watch every section that has an ID matching our nav items
     navItems.forEach((item) => {
       const el = document.querySelector(item.href);
       if (el) observer.observe(el);
@@ -42,7 +40,6 @@ export default function Navbar() {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    // Temporarily set active hash for immediate feedback
     setActiveHash(href);
     const target = document.querySelector(href);
     if (target) {
@@ -53,8 +50,6 @@ export default function Navbar() {
   return (
     <div className="fixed top-8 left-0 w-full flex justify-center z-100 pointer-events-none px-4">
       <nav className="relative flex items-center gap-1 p-1.5 rounded-2xl bg-[#0a0a0c] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.05)] pointer-events-auto overflow-hidden">
-        {/* ... (rest of your fancy UI code stays exactly the same) ... */}
-
         <div className="pl-3 pr-4 flex items-center">
           <Icon
             className="w-6 h-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-300"
