@@ -9,8 +9,7 @@ export const site = {
   discord: 'nxen',
   meta: {
     title: 'Nxen',
-    description:
-      'Nxen scripts top-quality frameworks for Roblox games, focusing on good quality, structure and performance.',
+    description: 'My portfolio.',
     ogImage: '/og-image.png',
     locale: 'en_US',
   },

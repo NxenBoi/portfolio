@@ -39,7 +39,8 @@ const ogImage = new URL(site.meta.ogImage, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {!index && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#7fb2ff" />
+    <!-- Also sets the side-bar colour of link embeds (e.g. Discord). -->
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
 
     <!-- Open Graph / social -->
