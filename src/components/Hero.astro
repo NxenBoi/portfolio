@@ -1,0 +1,119 @@
+---
+import Stop from './Stop.astro';
+import GlassPanel from './GlassPanel.astro';
+import Button from './Button.astro';
+import { site } from '../data/site';
+const { hero } = site;
+---
+
+<Stop kind="hero" side="left" id="spawn" label={site.zones.hero} labelledby="hero-title">
+  <GlassPanel class="hero">
+    <h1 class="hero__title" id="hero-title">
+      <span class="hero__line" data-load-reveal>{hero.titleLead}</span>
+      <span class="hero__line accent-text" data-load-reveal>{hero.titleAccent}</span>
+    </h1>
+    <p class="hero__sub" data-load-reveal>{hero.subline}</p>
+    <div class="hero__actions" data-load-reveal>
+      <Button href={hero.primaryCta.href} size="lg">{hero.primaryCta.label}</Button>
+      <Button href={hero.secondaryCta.href} variant="ghost" size="lg">{hero.secondaryCta.label}</Button>
+    </div>
+  </GlassPanel>
+</Stop>
+
+<p class="scroll-hint" aria-hidden="true" data-scroll-hint>
+  <span class="scroll-hint__mouse"><span></span></span>
+  {hero.scrollHint}
+</p>
+
+<style>
+  :global(#spawn) {
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-margin-top: 0;
+  }
+
+  .hero {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  .hero__title {
+    display: grid;
+    font-size: var(--step-6);
+    line-height: var(--lh-tight);
+    max-width: var(--measure-headline);
+  }
+
+  .hero__line {
+    display: block;
+    padding-bottom: 0.08em;
+  }
+
+  .hero__sub {
+    font-size: var(--step-1);
+    line-height: var(--lh-snug);
+    color: var(--c-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .scroll-hint {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-3);
+    z-index: var(--z-hud);
+    transform: translateX(-50%);
+    display: grid;
+    justify-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-lg);
+    background: var(--c-glass);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--c-ink);
+    pointer-events: none;
+  }
+
+  .scroll-hint__mouse {
+    width: var(--space-3);
+    height: var(--space-4);
+    border: var(--line-w) solid var(--c-ink);
+    border-radius: var(--radius-pill);
+    display: grid;
+    justify-items: center;
+    padding-top: var(--space-1);
+  }
+
+  .scroll-hint__mouse span {
+    width: var(--line-w);
+    height: var(--space-1);
+    background: var(--c-ink);
+    border-radius: var(--radius-pill);
+    animation: wheel 1.6s var(--ease-out) infinite;
+  }
+
+  @keyframes wheel {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(var(--space-1));
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce), (max-width: 767px) {
+    .scroll-hint {
+      display: none;
+    }
+  }
+</style>

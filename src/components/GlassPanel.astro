@@ -1,0 +1,73 @@
+---
+/**
+ * Frosted Y2K glass surface: blur, glossy top highlight, iridescent rim.
+ * Used by every content panel floating in the 3D world.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'div'> & { as?: 'div' | 'article' | 'li'; size?: 'md' | 'sm' };
+const { as: Tag = 'div', size = 'md', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['glass', `glass--${size}`, className]} {...rest}>
+  <span class="glass__gloss" aria-hidden="true"></span>
+  <slot />
+</Tag>
+
+<style>
+  .glass {
+    position: relative;
+    isolation: isolate;
+    background: var(--c-glass);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.5);
+    -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.5);
+    border: var(--border-glass) solid var(--c-glass-edge);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .glass--sm {
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+  }
+
+  /* Glossy bubble highlight across the top: the Frutiger-Aero signature. */
+  .glass__gloss {
+    position: absolute;
+    inset: var(--border-w) var(--border-w) 55% var(--border-w);
+    z-index: -1;
+    border-radius: inherit;
+    border-bottom-left-radius: 50% 30%;
+    border-bottom-right-radius: 50% 30%;
+    background: var(--g-gloss);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Thin iridescent rim. */
+  .glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: var(--border-glass);
+    background: var(--g-iridescent);
+    -webkit-mask:
+      linear-gradient(var(--c-mask) 0 0) content-box,
+      linear-gradient(var(--c-mask) 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(var(--c-mask) 0 0) content-box exclude,
+      linear-gradient(var(--c-mask) 0 0);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    .glass {
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+    }
+  }
+</style>

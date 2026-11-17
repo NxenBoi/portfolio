@@ -1,0 +1,27 @@
+---
+/** The fixed full-screen WebGL canvas everything flies through. */
+---
+
+<div class="world" aria-hidden="true">
+  <canvas class="world__canvas" data-world-canvas></canvas>
+</div>
+
+<style>
+  .world {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-world);
+    pointer-events: none;
+  }
+
+  .world__canvas {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease-out);
+  }
+
+  .world__canvas:global(.is-ready) {
+    opacity: 1;
+  }
+</style>

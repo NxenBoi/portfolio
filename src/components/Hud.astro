@@ -1,0 +1,105 @@
+---
+/**
+ * Game-style journey map: one link per stop, plus a progress rail.
+ * Click any stop to fly there. Shown on wide screens only.
+ */
+import { games } from '../data/games';
+import { site } from '../data/site';
+const pad = (n: number) => String(n).padStart(2, '0');
+const z = site.zones;
+const stops = [
+  { label: z.hero, href: '#spawn' },
+  ...games.map((_, i) => ({ label: `${z.games} ${pad(i + 1)}`, href: i === 0 ? '#games' : `#game-${i + 1}` })),
+  { label: z.promises, href: '#promises' },
+  { label: z.contact, href: '#contact' },
+];
+---
+
+<nav class="hud" aria-label="Journey map" data-hud>
+  <div class="hud__rail" aria-hidden="true"><span class="hud__fill" data-hud-fill></span></div>
+  <ol class="hud__stops">
+    {
+      stops.map((s, i) => (
+        <li>
+          <a class="hud__link" href={s.href} data-hud-stop={i}>
+            {s.label}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .hud {
+    position: fixed;
+    right: var(--gutter);
+    top: 50%;
+    z-index: var(--z-hud);
+    transform: translateY(-50%);
+    display: flex;
+    gap: calc(var(--space-1) / 2);
+    padding: calc(var(--space-1) / 2) calc(var(--space-1) / 2) calc(var(--space-1) / 2) var(--space-1);
+    border-radius: var(--radius-md);
+    background: var(--c-glass);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border: var(--border-glass) solid var(--c-glass-edge);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hud__rail {
+    position: relative;
+    width: var(--line-w);
+    margin-block: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--c-border-strong);
+    overflow: hidden;
+  }
+
+  .hud__fill {
+    position: absolute;
+    inset: 0;
+    background: var(--g-iridescent);
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+
+  .hud__stops {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+
+  .hud__link {
+    display: flex;
+    align-items: center;
+    min-height: var(--hit-xs);
+    padding-inline: var(--space-1);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--c-muted);
+    text-decoration: none;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .hud__link:hover {
+    color: var(--c-ink);
+    background: var(--c-glass-strong);
+  }
+
+  .hud__link[aria-current='step'] {
+    color: var(--c-ink);
+    font-weight: var(--fw-bold);
+  }
+
+  /* The map only fits beside the panels on wide screens. */
+  @media (max-width: 1279px) {
+    .hud {
+      display: none;
+    }
+  }
+</style>

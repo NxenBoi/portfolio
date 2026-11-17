@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Design tokens: the ONLY place colours, sizes and timings are defined.
+   Mood: "dream-sky world". Frutiger-Aero gloss + bubbles, Y2K/Y3K chrome,
+   cotton-candy pink clouds, aqua glass. Pastel pink + pastel blue.
+   60 / 30 / 10  →  pastel sky / frosted white glass / pink CTA + deep accents.
+   The 3D world reads the --sky-* and --c-* colours below at runtime.
+   ========================================================================== */
+
+:root {
+  /* ---- 60%: the sky (one palette per zone of the world) ----------------- */
+  --sky-hero-top: #7fb2ff;
+  --sky-hero-horizon: #e3f1ff;
+  --sky-hero-bottom: #bfe0ff;
+
+  --sky-games-top: #8fa8ff;
+  --sky-games-horizon: #fbe3f6;
+  --sky-games-bottom: #d9cfff;
+
+  --sky-promises-top: #8e8cf0;
+  --sky-promises-horizon: #ecebff;
+  --sky-promises-bottom: #c9c6f7;
+
+  --sky-contact-top: #ff9ec9;
+  --sky-contact-horizon: #fff0f7;
+  --sky-contact-bottom: #ffd0e6;
+
+  /* Page fallback when WebGL is unavailable. */
+  --g-page-sky: linear-gradient(
+    180deg,
+    var(--sky-hero-top) 0%,
+    var(--sky-hero-horizon) 30%,
+    var(--sky-games-horizon) 55%,
+    var(--sky-promises-horizon) 75%,
+    var(--sky-contact-horizon) 100%
+  );
+
+  /* ---- 30%: frosted glass surfaces --------------------------------------- */
+  --c-glass: rgb(255 255 255 / 0.72);
+  --c-glass-strong: rgb(255 255 255 / 0.86);
+  --c-glass-edge: rgb(255 255 255 / 0.95);
+  --c-border: rgb(21 26 58 / 0.1);
+  --c-border-strong: rgb(21 26 58 / 0.2);
+  --c-shine: rgb(255 255 255 / 0.9);
+  --c-mask: #000000; /* CSS mask fill, never visible */
+
+  /* ---- 10%: accents ------------------------------------------------------ */
+  /* Pastel pink: ONLY for the primary action on screen. */
+  --c-pink: #ffb5d6;
+  --c-pink-hover: #ffc9e1;
+  --c-pink-rgb: 255 181 214;
+  /* Pastel blue: highlights and glows. */
+  --c-blue: #a8cbff;
+  --c-blue-rgb: 168 203 255;
+  /* Deep versions for small text on glass (pass AA). */
+  --c-blue-deep: #2c55c9;
+  --c-pink-deep: #b02a6e;
+  /* Decorative pastels (3D + gradients only). */
+  --c-lilac: #c9b8ff;
+  --c-aqua: #8fe6f0;
+  --c-mint: #b4eed6;
+  --c-grass: #9fe3a8;
+  --c-white: #ffffff;
+
+  /* ---- Text -------------------------------------------------------------- */
+  --c-ink: #151a3a;
+  --c-ink-rgb: 21 26 58;
+  --c-muted: #454b70;
+  --c-on-pink: var(--c-ink);
+
+  /* ---- Signature gradients ---------------------------------------------- */
+  --g-iridescent: linear-gradient(
+    115deg,
+    var(--c-blue) 0%,
+    var(--c-lilac) 35%,
+    var(--c-pink) 65%,
+    var(--c-aqua) 100%
+  );
+  --g-accent-text: linear-gradient(100deg, var(--c-blue-deep) 0%, var(--c-pink-deep) 100%);
+  --g-gloss: linear-gradient(180deg, var(--c-shine) 0%, rgb(255 255 255 / 0) 55%);
+  --g-glare: radial-gradient(
+    circle at 50% 50%,
+    rgb(255 255 255 / 0.65) 0%,
+    rgb(var(--c-pink-rgb) / 0.2) 30%,
+    transparent 60%
+  );
+
+  /* ---- Typography -------------------------------------------------------- */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Fluid type scale, ratio 1.25. */
+  --step--2: 0.75rem;
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.18rem + 0.31vw, 1.406rem);
+  --step-2: clamp(1.563rem, 1.45rem + 0.48vw, 1.758rem);
+  --step-3: clamp(1.953rem, 1.78rem + 0.74vw, 2.197rem);
+  --step-4: clamp(2.441rem, 2.17rem + 1.12vw, 2.747rem);
+  --step-5: clamp(2.6rem, 2.2rem + 1.9vw, 3.433rem);
+  --step-6: clamp(2.8rem, 2rem + 3.6vw, 4.6rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --tracking-tight: -0.035em;
+  --tracking-wide: 0.14em;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* ---- Spacing (8px grid) ------------------------------------------------ */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+  --gutter: clamp(var(--space-2), 4vw, var(--space-4));
+
+  /* ---- Layout ------------------------------------------------------------ */
+  --content-max: 1200px;
+  --panel-w: 34rem;
+  --panel-wide: 68rem;
+  --stop-h: 170vh;
+  --nav-h: 3.25rem;
+  --nav-max: 46rem;
+  --hit: 2.75rem; /* 44px hit target (buttons, cards) */
+  --hit-sm: 2.25rem; /* 36px: compact nav (above the WCAG 2.2 24px minimum) */
+  --hit-xs: 1.75rem; /* 28px: journey map rows */
+  --badge: 2rem;
+  --border-w: 1px;
+  --border-glass: 1.5px;
+  --focus-w: 3px;
+  --focus-offset: 3px;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+  --radius-pill: 999px;
+  --dot: 0.625rem;
+  --line-w: 2px;
+  --hud-w: 6.5rem;
+  --measure-headline: 13ch;
+  --measure-copy: 36rem;
+  --card-min: 15rem;
+  --lift: -2px;
+  /* Floating promise cards: how far they scatter and how much they bob. */
+  --scatter-x: 2.5rem;
+  --scatter-y: 1.5rem;
+  --scatter-r: 3deg;
+  --float-amp: 0.75rem;
+  --float-rot: 1.2deg;
+  --float-dur: 7s;
+
+  /* ---- Effects ----------------------------------------------------------- */
+  --blur-glass: 22px;
+  --shadow-panel:
+    0 2rem 4rem -1.5rem rgb(var(--c-ink-rgb) / 0.35),
+    inset 0 1px 0 var(--c-glass-edge);
+  --shadow-soft: 0 1rem 2rem -1rem rgb(var(--c-ink-rgb) / 0.3);
+  --shadow-glow-pink: 0 0.5rem 2rem rgb(var(--c-pink-rgb) / 0.75);
+  --shadow-glow-blue: 0 0 1.5rem rgb(var(--c-blue-rgb) / 0.8);
+  --tilt-perspective: 900px;
+  --depth-perspective: 1400px;
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+  --dur-slow: 900ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Z layers ---------------------------------------------------------- */
+  --z-world: 0;
+  --z-content: 1;
+  --z-hud: 40;
+  --z-nav: 50;
+  --z-skip: 100;
+
+  color-scheme: light;
+}

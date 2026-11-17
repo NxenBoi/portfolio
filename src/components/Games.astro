@@ -1,0 +1,146 @@
+---
+/**
+ * One world stop per game, alternating sides. Everything on the card comes
+ * from Roblox at build time (see src/lib/roblox.ts); the thumbnail shows on
+ * the floating 3D screen beside the panel.
+ */
+import Stop from './Stop.astro';
+import GlassPanel from './GlassPanel.astro';
+import { games } from '../data/games';
+import { site } from '../data/site';
+import { formatCount, loadGames } from '../lib/roblox';
+
+const cards = await loadGames(games);
+const pad = (n: number) => String(n).padStart(2, '0');
+const s = site.games;
+---
+
+{
+  cards.map((g, i) => {
+    const stats = [
+      { label: s.visits, value: g.visits },
+      { label: s.likes, value: g.likes },
+      { label: s.favorites, value: g.favorites },
+    ];
+    const hasStats = stats.some((st) => st.value !== null);
+    return (
+      <Stop
+        kind="game"
+        side={i % 2 === 0 ? 'right' : 'left'}
+        id={i === 0 ? 'games' : `game-${i + 1}`}
+        label={`${site.zones.games} ${pad(i + 1)}`}
+        image={g.image}
+        title={g.title}
+        labelledby={`game-${i + 1}-title`}
+      >
+        <GlassPanel as="article" class="game">
+          <h2 class="game__title" id={`game-${i + 1}-title`}>
+            <a href={g.url} target="_blank" rel="noopener noreferrer">
+              {g.title}
+              <span class="game__arrow" aria-hidden="true">↗</span>
+              <span class="sr-only"> (play on Roblox, opens in a new tab)</span>
+            </a>
+          </h2>
+          {g.description && <p class="game__desc">{g.description}</p>}
+          {hasStats && (
+            <dl class="game__stats">
+              {stats.map((st) => (
+                <div class="game__stat">
+                  <dt>{st.label}</dt>
+                  <dd class="accent-text">{formatCount(st.value)}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </GlassPanel>
+      </Stop>
+    );
+  })
+}
+
+<style>
+  .game {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .game__title {
+    font-size: var(--step-4);
+    line-height: var(--lh-tight);
+  }
+
+  .game__title a {
+    color: var(--c-ink);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .game__title a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: var(--line-w);
+  }
+
+  .game__arrow {
+    display: inline-block;
+    margin-left: 0.15em;
+    font-size: 0.6em;
+    vertical-align: super;
+    color: var(--c-blue-deep);
+  }
+
+  /* Roblox descriptions keep their line breaks (and emoji). */
+  .game__desc {
+    white-space: pre-line;
+    color: var(--c-muted);
+  }
+
+  .game__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1);
+  }
+
+  .game__stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: calc(var(--space-1) / 2);
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--c-glass-strong);
+    border: var(--border-w) solid var(--c-border);
+  }
+
+  .game__stat dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  .game__stat dd {
+    margin: 0;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--step-2);
+    line-height: var(--lh-tight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Phones: three stats still fit on one row. */
+  @media (max-width: 767px) {
+    .game__stat {
+      padding: var(--space-1);
+    }
+
+    .game__stat dt {
+      letter-spacing: normal;
+      font-size: var(--step--1);
+    }
+
+    .game__stat dd {
+      font-size: var(--step-1);
+    }
+  }
+</style>

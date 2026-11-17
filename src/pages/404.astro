@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Stop from '../components/Stop.astro';
+import GlassPanel from '../components/GlassPanel.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
+const nf = site.notFound;
+---
+
+<BaseLayout title={`404 | ${site.brand}`} description={nf.body} index={false}>
+  <Stop kind="hero" side="center" id="spawn" label="404" labelledby="nf-title">
+    <GlassPanel class="nf">
+      <p class="nf__code accent-text" aria-hidden="true">404</p>
+      <h1 class="nf__title" id="nf-title">{nf.title}</h1>
+      <p class="nf__body">{nf.body}</p>
+      <Button href="/" size="lg">{nf.cta}</Button>
+    </GlassPanel>
+  </Stop>
+</BaseLayout>
+
+<style>
+  :global(#spawn) {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .nf {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  .nf__code {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--step-6);
+    line-height: var(--lh-tight);
+  }
+
+  .nf__title {
+    font-size: var(--step-4);
+  }
+
+  .nf__body {
+    color: var(--c-muted);
+  }
+</style>

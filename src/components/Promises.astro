@@ -1,0 +1,161 @@
+---
+/**
+ * Promise cards floating freely in the chrome zone: no header box, cards
+ * scattered across an even grid with seeded random offsets and tilt, each
+ * bobbing gently on its own rhythm.
+ *
+ * Layers per card (so animations never fight):
+ *   li.promise     → static scatter offset + rotation (CSS vars)
+ *   .promise__float → idle float loop (CSS keyframes, off for reduced motion)
+ *   TiltCard       → scroll reveal (GSAP) + cursor tilt (GSAP)
+ */
+import Stop from './Stop.astro';
+import TiltCard from './TiltCard.astro';
+import { promises } from '../data/promises';
+import { site } from '../data/site';
+
+// Seeded RNG: "random" but identical on every build, so the layout is stable.
+let seed = 20261117;
+const rand = () => {
+  seed = (seed * 1664525 + 1013904223) % 4294967296;
+  return seed / 4294967296;
+};
+const jitter = () => (rand() * 2 - 1).toFixed(3); // -1 … 1
+
+const cards = promises.map((item, i) => ({
+  ...item,
+  index: String(i + 1).padStart(2, '0'),
+  style: [
+    `--sx:${jitter()}`,
+    `--sy:${jitter()}`,
+    `--sr:${jitter()}`,
+    `--fx:${jitter()}`,
+    `--fd:${(0.8 + rand() * 0.5).toFixed(3)}`,
+    `--fdelay:${(-rand() * 6).toFixed(2)}s`,
+  ].join(';'),
+}));
+---
+
+<Stop kind="promises" side="center" wide id="promises" label={site.zones.promises} labelledby="promises-title">
+  <h2 class="sr-only" id="promises-title">{site.promises.title}</h2>
+  <ul class="promises" role="list" data-reveal-group>
+    {
+      cards.map((item) => (
+        <li class="promise" style={item.style}>
+          <div class="promise__float">
+            <TiltCard>
+              <span class="promise__orb" aria-hidden="true">
+                {item.index}
+              </span>
+              <h3 class="promise__title">{item.title}</h3>
+              <p class="promise__desc">{item.description}</p>
+            </TiltCard>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Stop>
+
+<style>
+  /* Even 3×2 grid underneath; each card is nudged off its cell. */
+  .promises {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-10) var(--space-6);
+    padding-block: var(--scatter-y);
+  }
+
+  .promise {
+    align-self: start;
+    translate: calc(var(--sx) * var(--scatter-x)) calc(var(--sy) * var(--scatter-y));
+    rotate: calc(var(--sr) * var(--scatter-r));
+  }
+
+  /* Stagger rows so it never reads as a tidy grid. */
+  .promise:nth-child(even) {
+    margin-top: var(--space-8);
+  }
+
+  .promise__float {
+    animation: promise-float calc(var(--float-dur) * var(--fd)) ease-in-out var(--fdelay) infinite;
+  }
+
+  @keyframes promise-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    33% {
+      transform: translate3d(calc(var(--fx) * var(--float-amp)), calc(var(--float-amp) * -1), 0)
+        rotate(calc(var(--fx) * var(--float-rot)));
+    }
+    66% {
+      transform: translate3d(calc(var(--fx) * var(--float-amp) * -0.6), calc(var(--float-amp) * 0.5), 0)
+        rotate(calc(var(--fx) * var(--float-rot) * -0.6));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promise__float {
+      animation: none;
+    }
+  }
+
+  /* Tablet: two columns. */
+  @media (max-width: 1023px) {
+    .promises {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .promise:nth-child(even) {
+      margin-top: var(--space-6);
+    }
+  }
+
+  /* Phones: one column, gentle side-to-side zigzag. */
+  @media (max-width: 767px) {
+    .promises {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+      padding-inline: var(--space-2);
+    }
+
+    .promise {
+      translate: calc(var(--sx) * var(--space-2)) 0;
+      rotate: calc(var(--sr) * var(--scatter-r) * 0.5);
+    }
+
+    .promise:nth-child(even) {
+      margin-top: 0;
+    }
+  }
+
+  /* Chrome bubble badge (Y3K chrome × Frutiger gloss). */
+  .promise__orb {
+    display: grid;
+    place-items: center;
+    width: var(--space-6);
+    height: var(--space-6);
+    margin-bottom: var(--space-1);
+    border-radius: var(--radius-pill);
+    background:
+      radial-gradient(circle at 35% 30%, var(--c-white) 0%, transparent 35%),
+      var(--g-iridescent);
+    box-shadow: var(--shadow-glow-blue), inset 0 -4px 8px rgb(var(--c-ink-rgb) / 0.15);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--fw-bold);
+    color: var(--c-ink);
+  }
+
+  .promise__title {
+    font-size: var(--step-2);
+  }
+
+  .promise__desc {
+    margin-top: var(--space-1);
+    color: var(--c-muted);
+    font-size: var(--step--1);
+  }
+</style>

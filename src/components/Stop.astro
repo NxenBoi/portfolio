@@ -1,0 +1,107 @@
+---
+/**
+ * One "stop" on the flight through the 3D world. The camera arrives at this
+ * stop's landmark when the section's centre crosses the middle of the screen.
+ *
+ * kind  → which 3D landmark the world builds here (see scripts/three/world.ts)
+ * side  → where the content panel sits; the landmark shows on the other side.
+ */
+export type StopKind = 'hero' | 'game' | 'promises' | 'contact';
+
+interface Props {
+  kind: StopKind;
+  side?: 'left' | 'right' | 'center';
+  id?: string;
+  label: string;
+  /** Game stops: screenshot path + title for the floating 3D screen. */
+  image?: string;
+  title?: string;
+  wide?: boolean;
+  labelledby?: string;
+}
+
+const { kind, side = 'left', id, label, image = '', title = '', wide = false, labelledby } = Astro.props;
+---
+
+<section
+  class:list={['stop', `stop--${side}`, { 'stop--wide': wide }]}
+  id={id}
+  aria-labelledby={labelledby}
+  data-stop={kind}
+  data-side={side}
+  data-label={label}
+  data-image={image}
+  data-title={title}
+>
+  <div class="stop__panel" data-enter>
+    <div class="stop__inner" data-exit>
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .stop {
+    position: relative;
+    min-height: var(--stop-h);
+    display: grid;
+    align-items: center;
+    padding: calc(var(--nav-h) + var(--space-4)) var(--gutter) var(--space-8);
+    /* Anchor links land with the stop centred on screen. */
+    scroll-margin-top: calc(50vh - var(--stop-h) / 2);
+  }
+
+  .stop__panel {
+    width: 100%;
+    max-width: var(--panel-w);
+    will-change: transform, opacity;
+  }
+
+  .stop--wide .stop__panel {
+    max-width: var(--panel-wide);
+  }
+
+  .stop__inner {
+    will-change: transform, opacity;
+  }
+
+  /* Desktop: panel hugs one side of the content column. */
+  @media (min-width: 768px) {
+    .stop {
+      grid-template-columns: minmax(0, var(--content-max));
+      justify-content: center;
+    }
+
+    .stop--left .stop__panel {
+      justify-self: start;
+    }
+
+    .stop--right .stop__panel {
+      justify-self: end;
+    }
+
+    .stop--center .stop__panel {
+      justify-self: center;
+    }
+  }
+
+  /* Leave room for the journey map on the right (shown from 1280px). */
+  @media (min-width: 1280px) {
+    .stop {
+      padding-right: calc(var(--hud-w) + var(--gutter) * 2);
+    }
+
+    /* Centred stops reserve the same space on both sides so they stay
+       truly centred on screen (and on their 3D landmark). */
+    .stop--center {
+      padding-left: calc(var(--hud-w) + var(--gutter) * 2);
+    }
+  }
+
+  /* Mobile: landmark floats in the top half, panel sits in the lower half. */
+  @media (max-width: 767px) {
+    .stop {
+      padding-top: calc(var(--nav-h) + var(--space-2));
+    }
+  }
+</style>

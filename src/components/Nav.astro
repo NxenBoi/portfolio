@@ -1,0 +1,202 @@
+---
+import { nav } from '../data/nav';
+import { site } from '../data/site';
+---
+
+<header class="nav" data-nav>
+  <nav class="nav__bar" aria-label="Primary">
+    <a class="nav__logo" href="/" aria-label={`${site.brand}, home`}>
+      <span class="nav__badge" aria-hidden="true"><img src={site.icon} alt="" width="48" height="48" /></span>
+      <span class="nav__brand">{site.brand}</span>
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+      <span class="sr-only">Menu</span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <ul class="nav__links" id="nav-menu" role="list" data-nav-menu>
+      {
+        nav.map((item) => (
+          <li>
+            <a class="nav__link" href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  /* Floating frosted-glass pill, detached from the edges like a game HUD. */
+  .nav {
+    position: fixed;
+    top: var(--space-2);
+    left: var(--gutter);
+    right: var(--gutter);
+    z-index: var(--z-nav);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+
+  .nav:global(.is-hidden) {
+    transform: translateY(calc(-100% - var(--space-4)));
+  }
+
+  .nav__bar {
+    position: relative;
+    pointer-events: auto;
+    width: 100%;
+    max-width: var(--nav-max);
+    min-height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: calc(var(--space-1) / 2) calc(var(--space-1) / 2) calc(var(--space-1) / 2) var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--c-glass);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.6);
+    -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.6);
+    border: var(--border-glass) solid var(--c-glass-edge);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .nav__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--hit-sm);
+    padding-right: var(--space-1);
+    border-radius: var(--radius-pill);
+    color: var(--c-ink);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+  }
+
+  .nav__badge {
+    display: grid;
+    place-items: center;
+    width: var(--badge);
+    height: var(--badge);
+    border-radius: var(--radius-pill);
+    /* Deep gradient so the white planet icon stands out. */
+    background:
+      radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.45) 0%, transparent 45%),
+      var(--g-accent-text);
+    box-shadow: var(--shadow-glow-blue);
+  }
+
+  .nav__badge img {
+    width: 75%;
+    height: 75%;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: calc(var(--space-1) / 2);
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--hit-sm);
+    padding-inline: var(--space-2);
+    font-size: var(--step--1);
+    border-radius: var(--radius-pill);
+    color: var(--c-ink);
+    text-decoration: none;
+    font-weight: var(--fw-medium);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .nav__link:hover {
+    background: var(--c-glass-strong);
+  }
+
+  .nav__toggle {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .nav__brand {
+      max-width: var(--measure-headline);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav__toggle {
+      display: inline-grid;
+      place-content: center;
+      gap: var(--space-1);
+      width: var(--hit-sm);
+      height: var(--hit-sm);
+      background: var(--c-glass-strong);
+      border: var(--border-w) solid var(--c-border-strong);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+    }
+
+    .nav__toggle-bar {
+      display: block;
+      width: var(--space-3);
+      height: var(--line-w);
+      background: var(--c-ink);
+      border-radius: var(--radius-pill);
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+
+    .nav__toggle[aria-expanded='true'] .nav__toggle-bar:first-of-type {
+      transform: translateY(calc(var(--space-1) / 2 + var(--line-w) / 2)) rotate(45deg);
+    }
+
+    .nav__toggle[aria-expanded='true'] .nav__toggle-bar:last-of-type {
+      transform: translateY(calc(var(--space-1) / -2 - var(--line-w) / 2)) rotate(-45deg);
+    }
+
+    .nav__links {
+      position: absolute;
+      top: calc(100% + var(--space-1));
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      padding: var(--space-2);
+      border-radius: var(--radius-lg);
+      background: var(--c-glass-strong);
+      backdrop-filter: blur(var(--blur-glass));
+      -webkit-backdrop-filter: blur(var(--blur-glass));
+      border: var(--border-glass) solid var(--c-glass-edge);
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      transform: translateY(calc(var(--space-2) * -1));
+      pointer-events: none;
+      visibility: hidden;
+      transition:
+        opacity var(--dur-med) var(--ease-out),
+        transform var(--dur-med) var(--ease-out),
+        visibility 0s linear var(--dur-med);
+    }
+
+    .nav__links:global(.is-open) {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      visibility: visible;
+      transition:
+        opacity var(--dur-med) var(--ease-out),
+        transform var(--dur-med) var(--ease-out);
+    }
+
+    .nav__link {
+      width: 100%;
+      font-size: var(--step-1);
+    }
+  }
+</style>
